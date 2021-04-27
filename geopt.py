@@ -6,7 +6,7 @@ import fiona
 class GeoPT(object):
         def __init__(self, shapefile):
                 self.data = fiona.open(shapefile)
-                self.transformer = pyproj.Transformer.from_crs("epsg:4326", self.data.crs.get('init', '').to_string())
+                self.transformer = pyproj.Transformer.from_crs("epsg:4326", self.data.crs.get('init', ''))
 
         def __transform(self, lat, lon):
                 return self.transformer.transform(lat, lon)
