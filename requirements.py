@@ -1,4 +1,4 @@
 fastapi
 uvicorn
-geopandas
+fiona
 pyproj
