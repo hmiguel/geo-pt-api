@@ -1,7 +1,6 @@
 from fastapi import FastAPI, HTTPException
 import geopt
 
-app = FastAPI()
 app = FastAPI(title="Geo PT API",
     description="Detect official divisional administrative regions of Portugal",
     version="1.0.0",)
