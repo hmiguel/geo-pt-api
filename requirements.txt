@@ -2,3 +2,4 @@ fastapi
 uvicorn
 fiona
 pyproj
+shapely
