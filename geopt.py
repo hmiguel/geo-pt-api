@@ -1,4 +1,3 @@
-#import geopandas as gpd
 from shapely.geometry import shape, Point
 import pyproj
 import fiona
@@ -14,10 +13,11 @@ class GeoPT(object):
         def get_location(self, lat, lon):
                 x, y = self.__transform(lat, lon)
                 point = Point(x,y)
-                #for index, feature in self.data.iterrows():
-                #        if shape(feature['geometry']).contains(point):
-                #                return {"freguesia" : feature['Freguesia'], "concelho" : feature['Concelho'], "distrito" : feature["Distrito"] }
-                return {'x':x, 'y':y}
+                for feature in self.data:
+                        if shape(feature['geometry']).contains(point):
+                                properties = feature.get('properties')
+                                return {"freguesia" : properties.get('Freguesia',None), "concelho" : properties.get('Concelho',None), "distrito" : properties.get('Distrito', None) }
+                return None
 
 if __name__ == "__main__":
         geo = GeoPT("Cont_AAD_CAOP2020.shp")
