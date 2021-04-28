@@ -1,5 +1,5 @@
 runtime: python37
-entrypoint: uvicorn main:app --port $PORT --timeout 120
+entrypoint: uvicorn main:app --port $PORT
 
 handlers:
     # This configures Google App Engine to serve the files in the app's static
