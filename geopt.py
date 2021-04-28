@@ -1,12 +1,12 @@
 from shapely.geometry import shape, Point
 import pyproj
-import geopandas as gpd
 import os
+import fiona 
 
 class Region(object):
         def __init__(self, shapefile):
-                self.data = gpd.read_file(shapefile)
-                self.transformer = pyproj.Transformer.from_crs("epsg:4326", self.data.crs)
+                self.data = fiona.open(shapefile)
+                self.transformer = pyproj.Transformer.from_crs("epsg:4326", self.data.crs.get('init', ''))
                 
 class GeoPT(object):
         def __init__(self, shapedir):
@@ -22,9 +22,10 @@ class GeoPT(object):
                 for region in self.regions:
                         x, y = self.__transform(region, lat, lon)
                         point = Point(x,y)
-                        for index, feature in region.data.iterrows():
+                        for feature in region.data:
                                 if shape(feature['geometry']).contains(point):
-                                        return {"freguesia" : feature.get('Freguesia',None), "concelho" : feature.get('Concelho',None), "distrito" : feature.get('Distrito', None), "ilha": feature.get('Ilha', None) }                 
+                                        properties = feature.get('properties')
+                                        return {"freguesia" : properties.get('Freguesia',None), "concelho" : properties.get('Concelho',None), "distrito" : properties.get('Distrito', None), "ilha": properties.get('Ilha', None) }                 
                 return None
 
 if __name__ == "__main__":
