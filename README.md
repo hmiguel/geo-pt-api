@@ -19,4 +19,4 @@ It creates a HTTP server, whose GET request `/?lat=40.153687&lon=-8.514602` retu
 (optional) $ python -m venv env && source env/bin/activate
 
 1. $ pip install -r requirements.txt
-2. $ uvicorn main:app --port <port>
+2. $ uvicorn main:app --port :port:
